@@ -25,6 +25,7 @@ public int getTimeGap() throws IOException {
       Date time = new Date(returnTime);
       long currentTime = System.currentTimeMillis();
       time_gap = Math.abs((currentTime - returnTime)) / 1000;
+      if(time_gap <= 5) time_gap = 0;
   }
   return time_gap;
 }
