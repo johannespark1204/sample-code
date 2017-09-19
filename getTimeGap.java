@@ -11,7 +11,7 @@ import java.util.TimeZone;
 
 private static final String TIME_SERVER = "1.kr.pool.ntp.org";
 
-public int getTimeGap() throws IOException {
+public long getTimeGap() throws IOException {
   int auto_time = Settings.Global.getInt(getContentResolver(), Settings.Global.AUTO_TIME, 0);
   int auto_time_zone = Settings.Global.getInt(getContentResolver(), Settings.Global.AUTO_TIME_ZONE, 0);
   long time_gap = 0;
@@ -21,8 +21,7 @@ public int getTimeGap() throws IOException {
       InetAddress inetAddress = InetAddress.getByName(TIME_SERVER);
       TimeInfo timeInfo = timeClient.getTime(inetAddress);
       long returnTime = timeInfo.getMessage().getTransmitTimeStamp().getTime();   //server time
-
-      Date time = new Date(returnTime);
+    
       long currentTime = System.currentTimeMillis();
       time_gap = Math.abs((currentTime - returnTime)) / 1000;
       if(time_gap <= 5) time_gap = 0;
